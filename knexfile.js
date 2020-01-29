@@ -1,7 +1,23 @@
 module.exports = {
   development: {
-    client: 'pg',
-    connection: 'postgres://user:pass@192.168.99.100:35432/db'
+    client: 'mysql',
+    connection: {
+      host     : 'localhost',
+      user     : 'root',
+      password : '',
+      database : 'fixtures',
+      charset  : 'utf8'
+    }
+  },
+  test: {
+    client: 'mysql',
+    connection: {
+      host     : 'localhost',
+      user     : 'root',
+      password : '',
+      database : 'test-fixtures',
+      charset  : 'utf8'
+    }
   }
 
-};
+}
