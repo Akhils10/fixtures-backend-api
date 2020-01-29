@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 exports.getSecret = () => {
     // const secret = require('../config/secret.json').secret;
     const secret = 'aaasrtblyttr566rf';
-    console.log('secret', secret);
     return secret;
 };
 
@@ -31,15 +30,14 @@ exports.token_post = (req, res) => {
     res.send(this.validateToken(req.header.Authorization, this.getSecret()));
 };
 
-exports.hasPermission = (token, resource) => {
+exports.hasPermission = (token, permission) => {
     const result = this.validateToken(token, this.getSecret());
     console.log(result);
     if(result.name === 'JsonWebTokenError') {
         return false;
     }else if (result.permissions) {
-        let permissionSet = new Set(result.permissions);
-        console.log('permissions in token', JSON.stringify(permissionSet));
-        return permissionSet.has(resource);
+        let permissionSet = result.permissions;
+        return permission.some(perm => permissionSet.includes(perm));
     }else {
         return false;
     }

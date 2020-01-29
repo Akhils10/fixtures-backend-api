@@ -31,13 +31,15 @@ exports.validateReg = [
 
 // Function below are used for registering users
 
-const _createUserAndLogin = (data, res) => {
-    const hashed = BcryptController.getHashedPassword(validated.password);
-    const user = {userName: data.email, email: data.email, name: data.name, passwordSalt: hashed.salt, password: hashed.passwordHash};
+const createUserAndLogin = (req, res) => {
+    const hashed = BcryptController.getHashedPassword(req.password);
+    const user = {username: req.email, email: req.email, name: req.name, passwordSalt: hashed.salt, password: hashed.passwordHash, role: req.role};
     Users.create(user).then(createdUser => console.log(createdUser))
         .then((login) => {
             res.status(200);
-            res.json({});
+            res.json({
+                message: 'success'
+            });
         })
         .catch((err) => {
             res.status(500);
@@ -52,7 +54,7 @@ exports.postReg = (req, res) => {
         res.json(errors.array());
     } else {
         const validatedData = matchedData(req);
-        _createUserAndLogin(validatedData, res);
+        createUserAndLogin(validatedData, res);
     };
 };
 
@@ -80,9 +82,7 @@ const assignToken = (req, res) => {
     };
   
     exports.postLogin = (req, res) => {
-        console.log(req.body.email);
         Users.getUserByEmail(req.body.email).then(login => {
-            console.log('data', login)
         if (!login) {
             res.status(400);
             res.json({err: 'No user registered with this email'});

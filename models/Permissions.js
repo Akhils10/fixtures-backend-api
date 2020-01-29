@@ -1,7 +1,7 @@
 const knex = require('../config/config');
 
 module.exports = {
-    getAllUsers() {
+    getAdmin() {
         return knex('users');
       },
     getUser(id) {

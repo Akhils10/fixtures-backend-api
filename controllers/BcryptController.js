@@ -8,6 +8,7 @@ exports.getHashedPassword = (password, salt) => {
     salt = bcrypt.genSaltSync(10);
   }
   let hash = bcrypt.hashSync(password, salt);
+  console.log(salt)
   return {
     salt: salt,
     passwordHash: hash,
