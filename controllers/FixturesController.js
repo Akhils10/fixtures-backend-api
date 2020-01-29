@@ -1,9 +1,37 @@
 const PermissionController = require('./PermissionController');
 const Fixtures = require('../models/Fixtures');
+const uuidv1 = require('uuid/v1');
+
 
 exports.getFixtures = (req, res) => {
     PermissionController.hasPermission(req, res, ['manage_fixtures'], () => {
         Fixtures.getFixtures().then(fixtures => {
+            res.status(200);
+            res.json(fixtures);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send(err);
+        });
+    });
+}
+
+exports.getPendingFixtures = (req, res) => {
+    PermissionController.hasPermission(req, res, ['manage_fixtures', "view_fixtures"], () => {
+        Fixtures.getPendingFixtures().then(fixtures => {
+            res.status(200);
+            res.json(fixtures);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.send(err);
+        });
+    });
+}
+
+exports.getCompletedFixtures = (req, res) => {
+    PermissionController.hasPermission(req, res, ['manage_fixtures', "view_fixtures"], () => {
+        Fixtures.getCompletedFixtures().then(fixtures => {
             res.status(200);
             res.json(fixtures);
         })
@@ -29,9 +57,13 @@ exports.getOneFixture = (req, res) => {
 }
 
 exports.editFixture = (req, res) => {
+    console.log('data is =', req.body.home_team)
     const fixtureData = {
-        name: req.body.name, 
-        links: !req.body.links || req.body.links == "" ? req.body.name.replace(' ', '') : req.body.links
+        home_team: req.body.home_team, 
+        away_team: req.body.away_team,
+        match_time: req.body.match_time,
+        status: req.body.status,
+        link: !req.body.link || req.body.link == "" ? req.body.home_team.slice(0,3).toLowerCase() + 'vs' + req.body.away_team.slice(0,3).toLowerCase() + uuidv1() : req.body.link
     }
     PermissionController.hasPermission(req, res, ["manage_fixtures"], () => {
         Fixtures.update(req.params.id, fixtureData)
@@ -48,8 +80,11 @@ exports.editFixture = (req, res) => {
 
 exports.addFixture = (req, res) => {
     const fixtureData = {
-        name: req.body.name, 
-        links: !req.body.links || req.body.links == "" ? req.body.name.replace(' ', '') : req.body.links
+        home_team: req.body.home_team, 
+        away_team: req.body.away_team,
+        match_time: req.body.match_time,
+        status: req.body.status,
+        link: !req.body.link || req.body.link == "" ? req.body.home_team.slice(0,3).toLowerCase() + 'vs' + req.body.away_team.slice(0,3).toLowerCase() + uuidv1() : req.body.link
     }
 
     PermissionController.hasPermission(req, res, ['manage_fixtures'], () => {

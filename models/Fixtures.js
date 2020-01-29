@@ -1,19 +1,25 @@
 const knex = require('../config/config');
 
 module.exports = {
-    getTeams() {
-        return knex('teams');
+    getFixtures() {
+        return knex('fixtures');
       },
-    getTeam(id) {
-        return knex('teams').where('id', id).first();
+    getFixture(id) {
+        return knex('fixtures').where('id', id).first();
     },
-    create(team) {
-        return knex('teams').insert(team, '*');
+    getPendingFixtures() {
+        return knex('fixtures').where('status', 'pending');
     },
-    update(id, team) {
-        return knex('teams').where('id', id).update(team, '*');
+    getCompletedFixtures() {
+        return knex('fixtures').where('status', 'completed');
+    },
+    create(fixture) {
+        return knex('fixtures').insert(fixture, '*');
+    },
+    update(id, fixture) {
+        return knex('fixtures').where('id', id).update(fixture, '*');
     },
     delete(id) {
-        return knex('teams').where('id', id).del();
+        return knex('fixtures').where('id', id).del();
     }
 }

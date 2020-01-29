@@ -7,6 +7,8 @@ const app = express();
 
 const AuthController = require('./controllers/AuthController');
 const TeamsController = require('./controllers/TeamsController');
+const FixturesController = require('./controllers/FixturesController');
+const SearchController = require('./controllers/SearchController');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -34,6 +36,27 @@ app.route('/api/v1/team/:id')
 
 app.route('/api/v1/addteam')
     .post(TeamsController.addTeam);
+
+// Fixtures route
+app.route('/api/v1/fixtures')
+    .get(FixturesController.getFixtures);
+
+app.route('/api/v1/pendingfixtures')
+    .get(FixturesController.getPendingFixtures);
+
+app.route('/api/v1/completedfixtures')
+    .get(FixturesController.getCompletedFixtures);
+
+app.route('/api/v1/fixtures/:id')
+    .get(FixturesController.getOneFixture)
+    .patch(FixturesController.editFixture)
+    .delete(FixturesController.removeFixture);
+
+app.route('/api/v1/fixtures')
+    .post(FixturesController.addFixture);
+
+app.route('/api/v1/search')
+    .get(SearchController.search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
