@@ -1,4 +1,4 @@
-const knex = require('./config');
+const knex = require('../config/config');
 
 module.exports = {
     getAllUsers() {
@@ -6,6 +6,9 @@ module.exports = {
       },
     getUser(id) {
         return knex('users').where('id', id).first();
+    },
+    getUserByEmail(email) {
+        return knex('users').where({email});
     },
     create(user) {
         return knex('users').insert(user, '*');

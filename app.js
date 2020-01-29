@@ -5,14 +5,23 @@ const logger = require('morgan');
 
 const app = express();
 
-const users = require('./routes/user');
+const AuthController = require('./controllers/AuthController')
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api/v1/users', users);
+
+
+// app.use('/api/v1/users', users);
+
+// Api endpoints (public)
+app.route('/api/v1/signup')
+    .post(AuthController.validateReg, AuthController.postReg)
+
+app.route('/api/v1/login')
+    .post(AuthController.postLogin)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
