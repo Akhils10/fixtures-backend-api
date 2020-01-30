@@ -8,7 +8,7 @@ const redis = require('redis');
 let client;
 
 if(process.env.NODE_ENV === 'production'){
-    client = redis.createClient('redis://h:pa00ae15a3edd70cc2b4c15c087470b2eb3751f030b65f96178c6d4e8a3480f7e@ec2-52-2-161-194.compute-1.amazonaws.com:8669');
+    client = redis.createClient('redis://h:pcc7f42fcb7baff28a020b60bc2def303b665db84586f2f8226da890651d203fb@ec2-3-210-246-86.compute-1.amazonaws.com:10749');
 }else{
     client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
 }

@@ -7,7 +7,7 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: 'postgres://atfuodvtofjtrc:4c5398746dce8e74ba1121366297144876ab91b17a7d94cd48f9948c5cf55bfb@ec2-107-22-216-151.compute-1.amazonaws.com:5432/da7576q3rktgep',
+    connection: 'postgres://jcgncnffgwagmh:ff9903a8c6640d745713d3a38fd44f96e648fd691083c1e38f963c0b5aef3e39@ec2-54-92-174-171.compute-1.amazonaws.com:5432/dbmctal2mm9ui4',
   },
   test: {
     client: 'mysql',
