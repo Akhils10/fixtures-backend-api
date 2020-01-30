@@ -5,7 +5,13 @@ const logger = require('morgan');
 const session = require('express-session');
 const redisStore = require('connect-redis')(session);
 const redis = require('redis');
-const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+let client;
+
+if(process.env.NODE_ENV === 'production'){
+    client = redis.createClient('redis://h:pa00ae15a3edd70cc2b4c15c087470b2eb3751f030b65f96178c6d4e8a3480f7e@ec2-52-2-161-194.compute-1.amazonaws.com:8669');
+}else{
+    client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+}
 
 client.on('connect', function(){
     console.log('connected to redis');
