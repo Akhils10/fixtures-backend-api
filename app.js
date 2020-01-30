@@ -55,7 +55,7 @@ app.route('/api/v1/fixtures/:id')
 app.route('/api/v1/fixtures')
     .post(FixturesController.addFixture);
 
-app.route('/api/v1/search')
+app.route('/api/v1/search/:title')
     .get(SearchController.search);
 
 // catch 404 and forward to error handler
