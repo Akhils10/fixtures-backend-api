@@ -60,8 +60,8 @@ exports.postReg = (req, res) => {
 
 // Functions  below are used for signing in
 
-const assignToken = (req, res) => {
-    Users.getUserByEmail(req.email)
+const assignToken = (login, req, res) => {
+    Users.getUserByEmail(login.email)
         .then((user) => {
             const payload = {
                 id: user.id,
@@ -72,6 +72,8 @@ const assignToken = (req, res) => {
 
             const secret = TokenController.getSecret();
             const token = TokenController.getToken(payload, secret);
+
+            req.session.user = {isloggedIn: true, token: token}
             res.json({token: token});
         })
         .catch((err) => {
@@ -96,7 +98,7 @@ const assignToken = (req, res) => {
             res.status(400);
             res.json({err: 'Password is invalid'});
         } else {
-            assignToken(login, res);
+            assignToken(login, req, res);
         }
         })
         .catch((err) => {
@@ -106,15 +108,3 @@ const assignToken = (req, res) => {
         });
     };
     
-    exports.logins_get = (req, res) => {
-        permissionController.hasPermission(req, res, 'get_logins', () => {
-        Logins.findAll().then((permissions) => {
-            res.status(200);
-            res.json(permissions);
-        })
-        .catch((err) => {
-            res.status(500);
-            res.send(err);
-        });
-        });
-    };

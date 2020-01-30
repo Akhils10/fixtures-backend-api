@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Returns a JSON object with the salt and hashed password
 exports.getHashedPassword = (password, salt) => {

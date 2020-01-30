@@ -32,7 +32,6 @@ exports.token_post = (req, res) => {
 
 exports.hasPermission = (token, permission) => {
     const result = this.validateToken(token, this.getSecret());
-    console.log(result);
     if(result.name === 'JsonWebTokenError') {
         return false;
     }else if (result.permissions) {

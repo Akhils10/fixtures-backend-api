@@ -2,29 +2,38 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const knex = require('./config/config')
+const session = require('express-session');
+const redisStore = require('connect-redis')(session);
+const redis = require('redis');
+const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
 
-knex.migrate.latest()
-    .then(() => {
-        // run seeds
-        return knex.seed.run(); 
-    })
+client.on('connect', function(){
+    console.log('connected to redis');
+})
+
+
 
 const app = express();
-
+  
 const AuthController = require('./controllers/AuthController');
 const TeamsController = require('./controllers/TeamsController');
 const FixturesController = require('./controllers/FixturesController');
+const UsersController = require('./controllers/UsersController');
 const SearchController = require('./controllers/SearchController');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+    secret: 'aydfdvewlufgvewodflefelffefe7',
+    saveUninitialized: true,
+    resave: false,
+    store: new redisStore({ host: process.env.REDIS_HOST, port: process.env.REDIS_PORT, client: client, ttl : 260})
+}))
 
 
-
-// app.use('/api/v1/users', users);
+app.use('/api/v1/logout', UsersController.logout);
 
 // Api endpoints (public)
 app.route('/api/v1/signup')
@@ -78,5 +87,6 @@ app.use(function(err, req, res, next) {
     error: req.app.get('env') === 'development' ? err : {}
   });
 });
+
 
 module.exports = app;

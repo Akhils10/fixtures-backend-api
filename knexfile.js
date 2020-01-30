@@ -3,32 +3,19 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection: {
-        host: process.env.DB_HOST || "postgres",
-        port: process.env.DB_PORT || 5432,
-        user: process.env.DB_USER || 'user',
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME || 'fixtures'
-      }
+    connection: process.env.POSTGRES_URI
   },
   production: {
     client: 'pg',
-    connection: {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT || 5432,
-        user: process.env.DB_USER || 'user',
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME || 'fixtures'
-      }
+    connection: 'postgres://atfuodvtofjtrc:4c5398746dce8e74ba1121366297144876ab91b17a7d94cd48f9948c5cf55bfb@ec2-107-22-216-151.compute-1.amazonaws.com:5432/da7576q3rktgep',
   },
   test: {
-    client: 'pg',
+    client: 'mysql',
     connection: {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT || 5432,
-        user: process.env.DB_USER || 'user',
-        password: process.env.DB_PASSWORD,
-        database: 'fixtures-test'
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'test-fixtures'
       }
   }
 

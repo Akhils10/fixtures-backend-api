@@ -1,16 +1,13 @@
-const TokenController = require('./TokenController');
-const PermissionController = require('./PermissionController');
-const Users = require('../models/Users');
-
-exports.users_get = (req, res) => {
-  PermissionController.hasPermission(req, res, 'get_users', () => {
-    Users.findAll().then((users) => {
-      res.status(200);
-      res.json(users);
-    })
-    .catch((err) => {
-      res.status(500);
-      res.send(err);
-    });
-  });
+exports.logout = (req, res) => {
+    if(req.session.user) {
+        req.session.destroy(function(){
+            res.json({
+                message: "logged out"
+            })
+        });
+    }else {
+        res.json({
+            message: 'user not logged in'
+        })
+    }
 };

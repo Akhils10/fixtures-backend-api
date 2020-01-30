@@ -3,6 +3,8 @@ exports.up = function(knex) {
         table.increments('id');
         table.string('home_team');
         table.string('away_team');
+        table.string('team1_score');
+        table.string('team2_score');
         table.string('match_time');
         table.string('link');
         table.string('status');
