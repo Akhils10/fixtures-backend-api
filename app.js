@@ -2,6 +2,13 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const knex = require('./config/config')
+
+knex.migrate.latest()
+    .then(() => {
+        // run seeds
+        return knex.seed.run(); 
+    })
 
 const app = express();
 
