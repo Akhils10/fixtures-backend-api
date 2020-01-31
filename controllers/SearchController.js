@@ -10,9 +10,9 @@ exports.search = async (req, res) => {
     await Fixtures.getFixtures().then(fixtures => searchData.push({type: "fixtures", data: fixtures}))
     response = searchData.filter(data => {
         if(data.type === "teams"){
-            return data.data[0].name.toLowerCase().includes(searchNeedle.toLowerCase())
+            return data.data[0].name.toLowerCase() == searchNeedle.toLowerCase()
         }else if(data.type === "fixtures"){
-            return data.data[0].home_team.toLowerCase().includes(searchNeedle.toLowerCase()) || data.data[0].away_team.toLowerCase().includes(searchNeedle.toLowerCase())
+            return data.data[0].home_team.toLowerCase() == searchNeedle.toLowerCase() || data.data[0].away_team.toLowerCase() == searchNeedle.toLowerCase()
         }
     });
 
