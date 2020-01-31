@@ -27,10 +27,16 @@ Admin accounts have full access
 
 - npm install
 - edit database config in config/config.js
-- run 'knex migrate:latest' to run migrations
-- run 'knex seed:run' to seed database
+- npm run migrate && npm run dev
 
-- 'npm start' or 'npm run dev' to start server
+
+## Run with Docker
+
+- cd into folder root
+- run "docker build ." to build Dockerfile
+- run "docker-compose up"
+
+If IP Address of docker container is not 192.168.99.100, ensure you set it to 192.168.99.100
 
 # Dummy accounts
 
