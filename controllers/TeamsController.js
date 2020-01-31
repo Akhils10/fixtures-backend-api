@@ -1,7 +1,15 @@
 const PermissionController = require('./PermissionController');
 const Teams = require('../models/Teams');
 const redis = require('redis');
-const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+let client;
+
+if(process.env.NODE_ENV === 'production'){
+    client = redis.createClient('redis://h:pcc7f42fcb7baff28a020b60bc2def303b665db84586f2f8226da890651d203fb@ec2-3-210-246-86.compute-1.amazonaws.com:10749');
+}else if(process.env.NODE_ENV === 'development'){
+    client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+}else{
+    client = redis.createClient();
+}
 
 
 exports.getTeams = (req, res) => {
