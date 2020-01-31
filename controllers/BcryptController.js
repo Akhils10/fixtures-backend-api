@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 
 // Returns a JSON object with the salt and hashed password
 exports.getHashedPassword = (password, salt) => {
-  console.log('Salt', salt);
   if (!salt) {
     console.log('salt was undefined');
     salt = bcrypt.genSaltSync(10);
