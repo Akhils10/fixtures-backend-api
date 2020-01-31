@@ -1,105 +1,27 @@
 # fixtures-backend-api
 An API that serves the latest scores of fixtures of matches in a “Mock Premier League”
 
+# Documentation
+
+https://documenter.getpostman.com/view/10250758/SWTD6wPU
+
+# Tools/Stack
+
+- Node JS / Express JS
+- Postgres
+- Redis 
+- POSTMAN
+- Mocha, chai and supertest for testing
+
+# Demo Server
+https://fixtures-mock-api.herokuapp.com/
+
+
 # Authentiation
+
 Authentication for api endpoints using json web tokens (jwt)
 Api access restricted to viewing for user accounts
 Admin accounts have full access
-
-# Api Routes
-
-/api/v1/signup -POST
-
-- body => {"name": "", "email":"", password: "", role: ""}
-- password should contain at least 8 characters
-- role should be 'adminUser' for admin account
-
-/api/v1/login -POST
-
-- body => {"email":"", password: ""}
-- will return a token if successful
-
-/api/v1/teams -GET
-
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/team/:id -GET
-
-- requires team id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/team/:id -DELETE
-
-- requires team id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/team/:id -PATCH
-
-- body => {"name": "Juventus FC", "links": "juventus"}
-- requires team id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/teams -GET
-
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/team/:id -GET
-
-- requires team id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/team/:id -DELETE
-
-- requires team id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/team/:id -PATCH
-
-- body => {"name": "Juventus FC", "links": "juventus"}
-- requires team id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/fixtures -GET
-
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/fixture/:id -GET
-
-- requires fixture id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/fixture/:id -DELETE
-
-- requires fixture id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/fixture/:id -PATCH
-
-- body => {"home_team": "Juventus FC", "away_team":"Real madrid", "team1_score":? 3, "team2_score":? 1, "status":"pending", "links": "juv-vs-mad"}
-- Links are uniquely generated but you may overide by passing your own link 
-- status may be "pending" or"completed"
-- If the fixture is completed, put the team scores; team1_score for home_team
-- requires team id passed as params
-- protected route
-- requires header - Authorization: Bearer <token>
-
-/api/v1/search/:team-or-fixture-to-search -GET
-
-- requires the search strinng
-- Unprotected route, available to the public
-- returns data from either teams or fixtures or both, whichever matches the search string
-
 
 # To run:
 
