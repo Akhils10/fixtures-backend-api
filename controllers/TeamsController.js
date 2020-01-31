@@ -8,7 +8,7 @@ if(process.env.NODE_ENV === 'production'){
 }else if(process.env.NODE_ENV === 'development'){
     client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
 }else{
-    client = redis.createClient();
+    client = redis.createClient(6379, '192.168.99.100');
 }
 
 
